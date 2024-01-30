@@ -1,9 +1,13 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState,  useEffect } from "react";
 
-const TodoForm = () => {
-  const initialValues = { todoField: "" };
+const TodoForm = ( { todos, setTodos} ) => {
+
+  const initialValues = { todoItem: "" };
   const [form, setForm] = useState(initialValues);
+
+  useEffect(() => {
+    setForm(initialValues);
+  }, [todos])
 
   const onChangeInput = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -12,21 +16,22 @@ const TodoForm = () => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    if (form.todoField === "") {
+    if (form.todoItem === "") {
       return false;
     }
+    setTodos([...todos, form]);
     console.log(form);
   };
 
   return (
     <form onSubmit={onSubmit}>
       <input
-        name="todoField"
+        name="todoItem"
         placeholder="What needs to be done?"
-        value={form.todoField}
+        value={form.todoItem}
         onChange={onChangeInput}
       />
-      <button className="bg-red-500">add</button>
+      <button className="bg-red-500 my-6">add</button>
     </form>
   );
 };
