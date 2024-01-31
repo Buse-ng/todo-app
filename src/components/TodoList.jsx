@@ -20,11 +20,17 @@ const TodoList = ({ todos, setTodos }) => {
   const markAsCompleted = (todoItem) => {
     const completedItem = todos.find(item => item.todoItem === todoItem);
 
-    if(completedItem){  
-      setCompleted([...new Set([...completed, completedItem])]);
+    if(completedItem) {
+      if(!completed.includes(completedItem)){
+        setCompleted([...completed, completedItem]);
+      }
+      else{
+        const newCompleteList = completed.filter((item) => item.todoItem !== todoItem);
+        setCompleted(newCompleteList);
+      }
     }
   }
-  
+
   useEffect(() => {
     console.log(completed);
   }, [completed]);
@@ -42,6 +48,11 @@ const TodoList = ({ todos, setTodos }) => {
               className="border-2 rounded-full border-red-700 p-2"
               onClick={ () => markAsCompleted(item.todoItem)}
             >
+              {
+                completed.find((compItem) => compItem.todoItem === item.todoItem) 
+                ? (<IoCheckmark />) 
+                : null
+              }
             </button>
             <li className="bg-red-500">{item.todoItem}</li>
             <button
@@ -55,7 +66,7 @@ const TodoList = ({ todos, setTodos }) => {
       </ul>
       <div className="flex gap-x-6 justify-between">
         <span>{todos.length} items left</span>
-        <TodoActivity />
+        <TodoActivity  />
         <div
           className="hover:underline cursor-pointer"
           onClick={removeAllItems}
