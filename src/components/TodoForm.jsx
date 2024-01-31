@@ -20,7 +20,7 @@ const TodoForm = ( { todos, setTodos} ) => {
       return false;
     }
     setTodos([...todos, form]);
-    console.log(form);
+    console.log("form:", form);
   };
 
   return (

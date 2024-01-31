@@ -32,7 +32,9 @@ const TodoList = ({ todos, setTodos }) => {
   }
 
   useEffect(() => {
-    console.log(completed);
+    const activeItems= (todos.filter((item)=> !completed.includes(item)))
+    console.log("completed:", completed);
+    console.log("activeItems:", activeItems);
   }, [completed]);
 
   return (
@@ -66,7 +68,7 @@ const TodoList = ({ todos, setTodos }) => {
       </ul>
       <div className="flex gap-x-6 justify-between">
         <span>{todos.length} items left</span>
-        <TodoActivity  />
+        <TodoActivity completed={completed} />
         <div
           className="hover:underline cursor-pointer"
           onClick={removeAllItems}

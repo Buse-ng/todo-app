@@ -7,7 +7,7 @@ const Todo = () => {
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {
-    console.log(todos);
+    console.log("todos:", todos);
   }, [todos]);
  
   return (
