@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TodoActivity from "./TodoActivity";
-import {IoClose } from "react-icons/io5";
+import { IoCheckmark, IoClose } from "react-icons/io5";
 
 const TodoList = ({ todos, setTodos }) => {
+  const [completed, setCompleted] = useState([]);
 
   const removeAllItems = () => {
     setTodos([]);
@@ -16,6 +17,18 @@ const TodoList = ({ todos, setTodos }) => {
     console.log(setTodos);
   };
 
+  const markAsCompleted = (todoItem) => {
+    const completedItem = todos.find(item => item.todoItem === todoItem);
+
+    if(completedItem){  
+      setCompleted([...new Set([...completed, completedItem])]);
+    }
+  }
+  
+  useEffect(() => {
+    console.log(completed);
+  }, [completed]);
+
   return (
     <div>
       <ul>
@@ -27,6 +40,7 @@ const TodoList = ({ todos, setTodos }) => {
           >
             <button 
               className="border-2 rounded-full border-red-700 p-2"
+              onClick={ () => markAsCompleted(item.todoItem)}
             >
             </button>
             <li className="bg-red-500">{item.todoItem}</li>
