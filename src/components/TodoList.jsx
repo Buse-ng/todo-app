@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import TodoActivity from "./TodoActivity";
 import { IoCheckmark, IoClose } from "react-icons/io5";
+import TodoForm from "./TodoForm";
 
 const TodoList = ({ todos, setTodos }) => {
   const [completed, setCompleted] = useState([]);
   const [filter, setFilter] = useState("all");
+  const [editedTodo, setEditedTodo] = useState({ id:null, text:"" });
 
   const removeCompletedItems = () => {
     const removeAll=todos.filter(item=>!completed.includes(item));
@@ -24,7 +26,7 @@ const TodoList = ({ todos, setTodos }) => {
   };
 
   const isCompletedItem = (todoId) => {
-    return completed.find((compItem) => compItem.id === todoId) !== undefined;
+    return completed.find((item) => item.id === todoId) !== undefined;
   };
 
   const markAsCompleted = (todoId) => {
@@ -61,8 +63,41 @@ const TodoList = ({ todos, setTodos }) => {
     }
   }
 
+  //* update operations starts
+  const todoEdit = (todoId) => {
+    const textEdit = todos.find((item) => item.id === todoId);  
+    setEditedTodo({ id: todoId, text: textEdit.todoItem });
+  }
+  //text change
+  const inputChange = (e) => {
+    setEditedTodo({ ...editedTodo, text: e.target.value });
+  }
+  
+  const saveEdit = () => {
+    if(!editedTodo.text.trim()){ // musn't be empty
+      setEditedTodo({ id: null, text: "" });
+      return;
+    }
+    const updatedTodo = todos.map((item)=>
+      item.id === editedTodo.id ? { ...item, todoItem: editedTodo.text } : item
+    );
+    setTodos(updatedTodo);
+    setEditedTodo({ id: null, text: "" });
+  }
+
+  const cancelEdit = () => {
+    setEditedTodo({ id: null, text: "" });
+  }
+  //* update operations ends
+
   return (
     <div>
+      <TodoForm 
+        todos={todos} 
+        setTodos={setTodos} 
+        completed={completed}
+        setCompleted={setCompleted}
+      />
       <ul>
         {filterTodos().map((item, index) => (
           <div
@@ -84,13 +119,26 @@ const TodoList = ({ todos, setTodos }) => {
             </button>
 
             <li 
-              onClick={() => textEdit(item.id)}
+              onClick={() => todoEdit(item.id)}
               className={`text-xl text-stone-700 font-medium tracking-wide 
               ${isCompletedItem(item.id) 
-              ? 'line-through transition-colors delay-150 duration-200 ease-in-out text-gray-200' 
-              : ""}`}
+                ? 'line-through transition-colors delay-150 duration-200 ease-in-out text-gray-200' 
+                : "" 
+              }`}
               >
-                {item.todoItem}
+                {editedTodo.id === item.id 
+                  ? (
+                      <div>
+                        <input 
+                          placeholder={item.todoItem}
+                          value={editedTodo.text} 
+                          onChange={inputChange} 
+                          onBlur={saveEdit} 
+                          autoFocus />
+                      </div>
+                    )
+                  : (item.todoItem)
+                }
             </li>
             
             <div
