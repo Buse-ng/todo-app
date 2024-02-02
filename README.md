@@ -1,9 +1,34 @@
-# React + Vite
+## React + Vite
+![React](https://img.shields.io/badge/React-18.2.0-blue)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+In this Todo application, you can add items, delete items, mark items as completed, delete all completed items, and update the content of items. 
+Additionally, you can filter items by active, completed, and all.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-# patika-todo-app
+
+
+
+![todos bng](https://github.com/Buse-ng/patika-todo-app/assets/69714956/e5c54c29-5ff0-4e21-b22b-1dcc87dd0775)
+
+
+
+
+## Installation and Run
+```
+git clone repo_link
+```
+
+```
+npm install
+```
+```
+npm run dev
+```
+
+## Technologies: 
+React and TailwindCSS
+
+
+---
+I tried to make something similar to this application:
+https://codepen.io/dmitrysharabin/pen/MWgQNYZ
